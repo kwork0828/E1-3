@@ -1,0 +1,11 @@
+$ python main.py --mode 2 --data nope.json
+#---------------------------------------
+# [1] 필터 로드
+#---------------------------------------
+⚠️ data.json 오류: 파일을 찾을 수 없습니다: nope.json
+
+$ python main.py --mode 2 --data tests/fixtures/broken.json
+#---------------------------------------
+# [1] 필터 로드
+#---------------------------------------
+⚠️ data.json 오류: JSON 문법 오류: Expecting property name enclosed in double quotes (줄 1, 칸 2)
