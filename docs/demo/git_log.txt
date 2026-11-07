@@ -1,0 +1,27 @@
+* 4d474e5 fix: ablation 해석 문구 정정(A 정책은 십자가뿐 아니라 14건 전부 표기 불일치로 FAIL)
+* c381bfb feat: 라벨 정규화/epsilon 정책 유무 비교 실험(ablation) 도구와 결과 로그 추가
+* a6b5d11 docs: 모드 1~4 실행 출력 원본(txt)과 렌더링 화면(png) 추가
+* 15af24c chore: 실제 실행 출력을 텍스트/PNG로 남기는 데모 도구 추가
+* 1b58663 test: unittest 19개 추가(라벨 정규화, MAC, epsilon, 입력 파싱, 스키마 검증, 모드 2 요약)
+*   97bd350 merge: feat/bonus 브랜치를 main에 병합(패턴 생성기, 1차원 최적화 비교)
+|\  
+| * c0fd3b1 feat: 보너스 모드 3(패턴 생성기)·모드 4(최적화 전/후 비교, --repeat) 추가
+| * 6757717 feat: 보너스 - 2차원→1차원(N²) 변환 MAC와 최적화 전/후 성능 비교 추가
+|/  
+*   cc15e9a merge: feat/mode2-json 브랜치를 main에 병합(모드 2, data.json)
+|\  
+| * d6165a3 feat: 모드 2(data.json 일괄 분석) 구현 - 라벨 정규화, 케이스 단위 FAIL, PASS/FAIL, 성능 표, 결과 요약
+| * da361b6 feat: 시드 고정 data.json 생성기와 데이터 추가(정상 12 + 경계 2), 스키마 오류 검증용 fixture 추가
+| * d769893 feat: data.json 로드와 스키마/크기/라벨 검증(케이스 단위 CaseError) 구현
+|/  
+*   a4a186c merge: feat/mode1-user-input 브랜치를 main에 병합(모드 1)
+|\  
+| * 55c6c71 feat: 모드 1(사용자 입력 3x3) 구현 - 필터 A/B, 패턴 입력, MAC, 판정, 3x3 성능 표
+| * e986390 feat: 콘솔 입력 파싱(열 개수/숫자 변환/NaN 검증)과 안내 문구 구현
+|/  
+* a089b42 feat: 크기별 MAC 평균 시간(10회 반복, 연산 구간만 측정) 성능 분석 모듈 추가
+* b6c90c1 fix: 크기 불일치 오류 메시지를 'N x N' 형태로 명확하게 수정
+* d13f8f9 feat: N×N 십자가/X 패턴 생성기와 노이즈 주입 함수 추가(보너스)
+* d422489 feat: 반복문 MAC 연산과 epsilon 기반 동점 판정(judge) 구현
+* 505fa23 feat: 라벨 정규화(+/cross→Cross, x→X) 모듈 구현
+* 89d3c33 chore: 저장소 초기화, .gitignore와 README 뼈대 추가
