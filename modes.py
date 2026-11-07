@@ -1,6 +1,7 @@
 """실행 모드 구현: 모드 1(사용자 입력 3×3), 모드 2(data.json 일괄 분석)."""
 import perf
 from core import EPSILON, judge, judge_ab, mac
+from patterns import generate_cross, generate_x, show
 from labels import CROSS, UNDECIDED, X
 from loader import (CaseError, DataError, case_sort_key, load_filters, parse_row,
                     prepare_case, read_json)
@@ -148,3 +149,48 @@ def run_json_mode(path: str) -> None:
     else:
         print("\n실패 0개: 라벨이 모두 표준 라벨(Cross/X)로 정규화되어 비교되고, 점수 비교에 허용오차(epsilon={:g}) "
               "정책이 적용되었기 때문입니다.".format(EPSILON))
+
+
+# ----------------------------------------------------------------------
+# 보너스 모드 3: 패턴 생성기 / 모드 4: 최적화(2차원→1차원) 전후 비교
+# ----------------------------------------------------------------------
+GEN_MIN, GEN_MAX = 3, 51
+
+
+def read_size() -> int:
+    """생성할 패턴 크기 N 을 입력받는다. 홀수만 허용(십자가/X 의 중심이 한 칸으로 정해지도록)."""
+    while True:
+        raw = read_line().strip()
+        try:
+            n = int(raw)
+        except ValueError:
+            print("⚠️ 잘못된 입력입니다. {}~{} 사이의 홀수를 입력하세요.".format(GEN_MIN, GEN_MAX))
+            continue
+        if not GEN_MIN <= n <= GEN_MAX or n % 2 == 0:
+            print("⚠️ 잘못된 입력입니다. {}~{} 사이의 홀수를 입력하세요.".format(GEN_MIN, GEN_MAX))
+            continue
+        return n
+
+
+def run_generator_mode() -> None:
+    """모드 3: N 입력 → Cross/X 패턴 자동 생성 → 서로의 필터로 MAC/판정 → 크기 N 성능."""
+    section("[1] 패턴 생성기")
+    print("크기 N 을 입력하세요 ({}~{} 홀수): ".format(GEN_MIN, GEN_MAX), end="", flush=True)
+    n = read_size()
+    cross, x = generate_cross(n), generate_x(n)
+    print("\n[Cross {0}x{0}]\n{1}\n\n[X {0}x{0}]\n{2}".format(n, show(cross), show(x)))
+
+    section("[2] 생성된 패턴을 필터로 재사용해 판정")
+    for name, grid in (("Cross 패턴", cross), ("X 패턴", x)):
+        score_cross, score_x = mac(grid, cross), mac(grid, x)
+        print("{}: Cross 필터 {} | X 필터 {} → 판정 {}".format(name, score_cross, score_x, judge(score_cross, score_x)))
+
+    section("[3] 성능 분석 ({0}x{0}, 평균/{1}회)".format(n, perf.REPEAT))
+    print(perf.format_table(perf.benchmark(sizes=(n,))))
+
+
+def run_optimize_mode(repeat: int = perf.REPEAT) -> None:
+    """모드 4: 2차원 이중 반복문 vs 1차원 단일 반복문, 같은 입력/같은 반복 횟수로 비교."""
+    section("[1] 최적화 전/후 비교 (평균/{}회)".format(repeat))
+    print(perf.format_compare(perf.compare_flat(repeat=repeat)))
+    print("\n※ 1차원 변환(flatten) 시간은 제외. 측정값은 실행마다 흔들리므로 --repeat 로 반복 횟수를 늘려 비교하세요.")
