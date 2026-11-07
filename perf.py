@@ -5,7 +5,7 @@
 """
 import time
 
-from core import mac
+from core import flatten, mac, mac_flat
 from labels import CROSS, X
 from patterns import generate
 
@@ -39,4 +39,29 @@ def format_table(rows) -> str:
     lines = ["{:<8}{:>14}{:>14}".format("크기", "평균 시간(ms)", "연산 횟수(N²)"), "-" * 38]
     for r in rows:
         lines.append("{:<8}{:>14.4f}{:>14}".format("{0}×{0}".format(r["n"]), r["avg_ms"], r["ops"]))
+    return "\n".join(lines)
+
+
+def compare_flat(sizes=DEFAULT_SIZES, repeat: int = REPEAT):
+    """최적화 전(2차원 이중 반복문) / 후(1차원 단일 반복문) 를 같은 입력, 같은 반복 횟수로 비교한다.
+
+    1차원 변환(flatten) 비용은 측정에서 제외한다. (변환은 한 번만 하고 여러 번 연산에 재사용하는 상황을 가정)
+    """
+    rows = []
+    for n in sizes:
+        pattern, filt = generate(CROSS, n), generate(X, n)
+        flat_p, flat_f = flatten(pattern), flatten(filt)
+        ms_2d = measure_ms(lambda: mac(pattern, filt), repeat)
+        ms_1d = measure_ms(lambda: mac_flat(flat_p, flat_f), repeat)
+        rows.append({"n": n, "ms_2d": ms_2d, "ms_1d": ms_1d,
+                     "speedup": ms_2d / ms_1d if ms_1d else float("inf"),
+                     "same": mac(pattern, filt) == mac_flat(flat_p, flat_f)})
+    return rows
+
+
+def format_compare(rows) -> str:
+    lines = ["{:<8}{:>12}{:>12}{:>10}{:>10}".format("크기", "2차원(ms)", "1차원(ms)", "배율", "결과동일"), "-" * 52]
+    for r in rows:
+        lines.append("{:<8}{:>12.4f}{:>12.4f}{:>9.2f}x{:>10}".format(
+            "{0}×{0}".format(r["n"]), r["ms_2d"], r["ms_1d"], r["speedup"], "O" if r["same"] else "X"))
     return "\n".join(lines)
