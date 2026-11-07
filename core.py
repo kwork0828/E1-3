@@ -16,7 +16,7 @@ def mac(pattern, filt) -> float:
     """
     n = len(pattern)
     if len(filt) != n:
-        raise ValueError("크기 불일치: 패턴 {0}x? 와 필터 {1}x? 의 크기가 다릅니다.".format(n, len(filt)))
+        raise ValueError("크기 불일치: 패턴은 {0}x{0}, 필터는 {1}x{1} 입니다.".format(n, len(filt)))
     total = 0.0
     for i in range(n):
         if len(pattern[i]) != n or len(filt[i]) != n:
