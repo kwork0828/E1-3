@@ -1,0 +1,24 @@
+test_clear_difference_is_decided (tests.test_core.EpsilonTest.test_clear_difference_is_decided) ... ok
+test_difference_just_above_epsilon_is_decided (tests.test_core.EpsilonTest.test_difference_just_above_epsilon_is_decided) ... ok
+test_float_noise_is_a_tie (tests.test_core.EpsilonTest.test_float_noise_is_a_tie) ... ok
+test_invalid_rows (tests.test_core.InputParseTest.test_invalid_rows) ... ok
+test_valid_row_with_extra_spaces (tests.test_core.InputParseTest.test_valid_row_with_extra_spaces) ... ok
+test_expected_and_filter_keys_are_normalized (tests.test_core.LabelTest.test_expected_and_filter_keys_are_normalized) ... ok
+test_unknown_label_raises (tests.test_core.LabelTest.test_unknown_label_raises) ... ok
+test_check_matrix_rejects_bad_shapes (tests.test_core.LoaderTest.test_check_matrix_rejects_bad_shapes) ... ok
+test_data_json_loads_all_filters (tests.test_core.LoaderTest.test_data_json_loads_all_filters) ... ok
+test_missing_and_broken_files_raise_data_error (tests.test_core.LoaderTest.test_missing_and_broken_files_raise_data_error) ... ok
+test_prepare_case_extracts_n_and_normalizes_expected (tests.test_core.LoaderTest.test_prepare_case_extracts_n_and_normalizes_expected) ... ok
+test_size_mismatch_is_case_error (tests.test_core.LoaderTest.test_size_mismatch_is_case_error) ... ok
+test_flat_version_matches_2d (tests.test_core.MacTest.test_flat_version_matches_2d) ... ok
+test_score_is_float (tests.test_core.MacTest.test_score_is_float) ... ok
+test_size_mismatch_raises (tests.test_core.MacTest.test_size_mismatch_raises) ... ok
+test_spec_example_scores (tests.test_core.MacTest.test_spec_example_scores) ... ok
+test_data_json_summary (tests.test_core.Mode2IntegrationTest.test_data_json_summary) ... ok
+test_invalid_data_does_not_crash_and_each_case_fails (tests.test_core.Mode2IntegrationTest.test_invalid_data_does_not_crash_and_each_case_fails) ... ok
+test_missing_file_is_reported_not_raised (tests.test_core.Mode2IntegrationTest.test_missing_file_is_reported_not_raised) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.006s
+
+OK
