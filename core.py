@@ -43,3 +43,25 @@ def judge_ab(score_a: float, score_b: float, epsilon: float = EPSILON) -> str:
     if is_tie(score_a, score_b, epsilon):
         return "판정 불가"
     return "A" if score_a > score_b else "B"
+
+
+# ----------------------------------------------------------------------
+# 보너스: 2차원 → 1차원(길이 N²) 변환으로 메모리 접근 패턴 단순화
+# ----------------------------------------------------------------------
+def flatten(grid):
+    """n×n 2차원 리스트를 길이 n² 의 1차원 리스트로 펼친다 (행 우선)."""
+    return [value for row in grid for value in row]
+
+
+def mac_flat(flat_pattern, flat_filter) -> float:
+    """1차원으로 펼친 패턴/필터의 MAC. 이중 반복문 + pattern[i][j] 두 번 인덱싱 대신 단일 반복문 + 한 번 인덱싱.
+
+    결과는 mac() 과 같고(합산 순서도 행 우선으로 동일), 연산 횟수도 N² 로 같다. 바뀌는 것은 접근 방식뿐이다.
+    """
+    size = len(flat_pattern)
+    if len(flat_filter) != size:
+        raise ValueError("길이 불일치: 패턴 {} 와 필터 {}".format(size, len(flat_filter)))
+    total = 0.0
+    for k in range(size):
+        total += flat_pattern[k] * flat_filter[k]
+    return total
