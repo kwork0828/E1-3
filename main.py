@@ -35,7 +35,7 @@ def main(argv=None) -> None:
         if mode == 1:
             modes.run_user_mode()
         else:
-            print("모드 2는 아직 준비 중입니다.")
+            modes.run_json_mode(args.data)
     except modes.QuitProgram:
         pass
 
