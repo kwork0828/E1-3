@@ -37,8 +37,8 @@ def main():
     for name, results in policies.items():
         failed = [k for k, ok in results if not ok]
         print("{:<20}{:>6}{:>6}{:>6}   {}".format(name, len(results), len(results) - len(failed), len(failed),
-                                                  ", ".join(failed) if len(failed) <= 4 else "{}건 (+ 기대값 케이스 전부)".format(len(failed))))
-    print("\n해석: A는 '+' 와 'Cross' 문자열이 달라 정답인 십자가 케이스까지 FAIL. "
+                                                  ", ".join(failed) if len(failed) <= 4 else "{}건 전부 (표기 '+'/'x' ≠ 표준 'Cross'/'X')".format(len(failed))))
+    print("\n해석: A는 expected('+','x')와 판정('Cross','X')의 표기가 문자열로 달라 판정이 맞아도 14건 전부 FAIL. "
           "B는 FAIL 0건이지만 동점 2건(size_5_5, size_13_5)을 우연히 한쪽으로 찍어 맞춘 '가짜 통과'. "
           "C만 동점을 UNDECIDED 로 드러낸다.")
 
